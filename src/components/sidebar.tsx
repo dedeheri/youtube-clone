@@ -184,7 +184,7 @@ const Sidebar = () => {
       <ScrollArea className="hidden md:block lg:hidden">
         <div className="w-20 h-screen flex flex-col items-center space-y-6">
           {sideLinkMd?.map(({ id, link, name, icon }) => (
-            <Link href={link}>
+            <Link key={id} href={link}>
               <Button className="flex flex-col" variant={"ghost"}>
                 <Image src={icon} alt={name} />
                 <p className="text-[0.6rem]">{name}</p>
