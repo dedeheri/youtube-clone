@@ -6,6 +6,7 @@ const nextConfig = {
       "i9.ytimg.com",
       "yt3.ggpht.com",
       "lh3.googleusercontent.com",
+      "yt3.googleusercontent.com",
     ],
   },
 };

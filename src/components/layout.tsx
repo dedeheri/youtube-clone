@@ -2,13 +2,29 @@ import React from "react";
 import Header from "./header";
 import Sidebar from "./sidebar";
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+import { Toaster } from "@/components/ui/toaster";
+
+const Layout = ({
+  children,
+  sidebar = false,
+}: {
+  children: React.ReactNode;
+  sidebar?: boolean;
+}) => {
   return (
-    <div className="bg-white">
+    <div className="bg-white dark:bg-black h-screen">
+      <Toaster />
       <Header />
       <div className="flex max-w-full">
-        <Sidebar />
-        <div className="space-y-3 w-full overflow-hidden px-5 ml-0 md:ml-[5rem] lg:ml-60">
+        {sidebar && <Sidebar />}
+
+        <div
+          className={`w-full ml-0 ${
+            sidebar
+              ? "space-y-3 w-full px-5 md:px-14 overflow-hidden  md:ml-[5rem] lg:ml-[13.7rem]"
+              : "mx-0 md:mx-6"
+          }`}
+        >
           {children}
         </div>
       </div>

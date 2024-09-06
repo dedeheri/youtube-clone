@@ -13,6 +13,8 @@ import menu from "@/assets/menu.png";
 import search from "@/assets/search.png";
 import mic from "@/assets/mic.png";
 import user from "@/assets/user.png";
+import logout from "@/assets/logout.png";
+import appearence from "@/assets/appearence.png";
 import ytbLogo from "@/assets/new-youtube-logo.png";
 
 export {
@@ -31,5 +33,7 @@ export {
   search,
   mic,
   user,
+  logout,
+  appearence,
   ytbLogo,
 };

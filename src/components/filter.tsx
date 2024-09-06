@@ -16,7 +16,7 @@ const Filter = () => {
   );
 
   return (
-    <nav className="h-12 mt-3 fixed top-14 bg-white">
+    <nav className="h-12 mt-3 fixed w-full top-14 bg-white dark:bg-black">
       <ScrollArea>
         <div className="flex space-x-3 h-11">
           {isLoading

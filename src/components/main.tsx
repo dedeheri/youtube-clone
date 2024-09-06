@@ -16,7 +16,7 @@ const Main = () => {
   const sortType = data?.data?.filter((res: any) => res.type === "video");
 
   return (
-    <div className="pt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-x-4 gap-y-11 w-full">
+    <div className="pt-28 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-x-4 gap-y-11 w-full">
       {isLoading
         ? [...Array(10)].map((_, i) => (
             <Skeleton key={i} className="w-80 h-48 rounded-md" />
@@ -47,15 +47,17 @@ const Main = () => {
                   <h1 className="font-medium leading-5 text-base">
                     {result?.title}
                   </h1>
-                  <p className="text-neutral-500 text-sm">
+                  <p className="text-neutral-500 dark:text-neutral-400 text-sm">
                     {result?.channelTitle}
                   </p>
                   <div className="flex space-x-1">
-                    <p className="text-neutral-500 text-sm">
+                    <p className="text-neutral-500 dark:text-neutral-400 text-sm">
                       {millify(result?.viewCount) + " views"}
                     </p>
-                    <p className="text-neutral-500 text-sm">•</p>
-                    <p className="text-neutral-500 text-sm">
+                    <p className="text-neutral-500 dark:text-neutral-400 text-sm">
+                      •
+                    </p>
+                    <p className="text-neutral-500 dark:text-neutral-400 text-sm">
                       {moment(result?.publishDate, "YYYYMMDD").fromNow()}
                     </p>
                   </div>

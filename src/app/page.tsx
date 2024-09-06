@@ -4,7 +4,7 @@ import Main from "@/components/main";
 
 export default function Home() {
   return (
-    <Layout>
+    <Layout sidebar={true}>
       <Filter />
       <Main />
     </Layout>
