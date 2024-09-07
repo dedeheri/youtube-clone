@@ -1,0 +1,47 @@
+datasource db {
+    provider  = "postgresql"
+    url       = env("NEXT_PUBLIC_DATABASE_URL")
+    directUrl = env("NEXT_PUBLIC_DIRECT_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model Filter {
+    id     String @id @default(cuid())
+    filter String
+}
+
+model Video {
+    id          String @id @default(cuid())
+    videoId     String
+    type        String
+    title       String
+    description String
+    viewCount   Int
+    lengthText  String
+    thumbnail   String
+
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
+
+    channelId String
+    channel   Channel @relation(fields: [channelId], references: [id])
+}
+
+model Channel {
+    id                  String @id @default(cuid())
+    name                String
+    handleName          String
+    description         String
+    avatar              String
+    banner              String
+    subscriberCountText String
+    videosCountText     String
+
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
+
+    Video Video[]
+}

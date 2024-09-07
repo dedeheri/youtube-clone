@@ -3,41 +3,62 @@
 import React, { useState } from "react";
 import { Badge } from "./ui/badge";
 
-import useSWR from "swr";
+import { IconRefresh } from "@tabler/icons-react";
+
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { Skeleton } from "./ui/skeleton";
-import { fetcher } from "@/hooks/useFetcher";
+import { Button } from "./ui/button";
+import { getFilter } from "@/hooks/filter";
 
-const Filter = () => {
-  const url = "https://yt-api.p.rapidapi.com/home";
-  const { data, isLoading } = useSWR(url, fetcher);
-  const [selectedFilter, setSelectedFilter] = useState<string>(
-    data?.filters?.[0]?.filter || "All"
-  );
+interface IFilter {
+  selectedFilter: string;
+  setSelectedFilter: (select: string) => void;
+}
+
+const Filter = ({ selectedFilter, setSelectedFilter }: IFilter) => {
+  const [refresh, setRefresh] = useState<number>(1);
+  // const [selectedFilter, setSelectedFilter] = useState<string>("All");
+
+  const { data, loading, success } = getFilter(refresh);
+
+  const handleRefresh = () => setRefresh(refresh + 1);
 
   return (
     <nav className="h-12 mt-3 fixed w-full top-14 bg-white dark:bg-black">
       <ScrollArea>
         <div className="flex space-x-3 h-11">
-          {isLoading
-            ? [...Array(21)].map((_, i) => (
-                <Skeleton className="w-16 h-8" key={i} />
-              ))
-            : data?.filters?.map((data: { filter: string }, index: string) => (
-                <Badge
-                  onClick={() => setSelectedFilter(data?.filter)}
-                  variant={
-                    selectedFilter === data?.filter ? "default" : "secondary"
-                  }
-                  key={index}
-                  className="h-8 rounded-lg px-4 cursor-pointer"
-                >
-                  <span className="whitespace-nowrap font-bold">
-                    {" "}
-                    {data?.filter}
-                  </span>
-                </Badge>
-              ))}
+          {loading ? (
+            [...Array(21)].map((_, i) => (
+              <Skeleton className="w-16 h-8" key={i} />
+            ))
+          ) : !success ? (
+            <div className="flex space-x-6">
+              <Button
+                onClick={handleRefresh}
+                className="h-8 space-x-2"
+                variant="ghost"
+              >
+                <IconRefresh />
+                <span>Refresh</span>
+              </Button>
+              <h1 className="font-medium text-lg ">Something went wrong</h1>
+            </div>
+          ) : (
+            data?.map((res: any, index: string) => (
+              <Badge
+                onClick={() => setSelectedFilter(res?.filter)}
+                variant={
+                  selectedFilter === res?.filter ? "default" : "secondary"
+                }
+                key={index}
+                className="h-8 rounded-lg px-4 cursor-pointer"
+              >
+                <span className="whitespace-nowrap font-bold">
+                  {res?.filter}
+                </span>
+              </Badge>
+            ))
+          )}
         </div>
 
         <ScrollBar orientation="horizontal" />

@@ -19,7 +19,7 @@ const Layout = ({
         {sidebar && <Sidebar />}
 
         <div
-          className={`w-full ml-0 ${
+          className={`w-full mt-20 ml-0 ${
             sidebar
               ? "space-y-3 w-full px-5 md:px-14 overflow-hidden  md:ml-[5rem] lg:ml-[13.7rem]"
               : "mx-0 md:mx-6"
