@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import { Button } from "./ui/button";
 import { useSession } from "next-auth/react";
 import { signIn } from "next-auth/react";
@@ -8,18 +8,59 @@ import UserToggle from "./user-toggle";
 import { IUser } from "@/interface/user";
 import { MenuIcon, MicIcon, SearchIcon, UserIcon, YoutubeIcon } from "./icons";
 import Notification from "./notification";
+import { Context } from "./context-provider";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
+  const pathName = usePathname();
   const { data: session } = useSession();
+
+  const {
+    SET_SHOW_SIDEBAR_MOBILE,
+    SHOW_SIDEBAR_DEKSTOP,
+    SET_SHOW_SIDEBAR_DEKSTOP,
+  } = useContext(Context);
 
   return (
     <div className="fixed h-20 top-0 bg-white dark:bg-black w-full">
-      <header className="h-14 w-full px-5 flex items-center relative justify-between">
-        <div className="flex items-center space-x-6">
-          <Button variant="ghost" className="rounded-full p-0 px-1.5">
+      <header className="h-14 w-full px-4 flex items-center relative justify-between">
+        <div className="hidden lg:flex items-center space-x-6">
+          {pathName === "/" ? (
+            <Button
+              onClick={() => SET_SHOW_SIDEBAR_DEKSTOP(!SHOW_SIDEBAR_DEKSTOP)}
+              variant="ghost"
+              className="rounded-full p-0 px-1.5 "
+            >
+              <MenuIcon />
+            </Button>
+          ) : (
+            <Button
+              onClick={() => SET_SHOW_SIDEBAR_MOBILE(true)}
+              variant="ghost"
+              className="rounded-full p-0 px-1.5 "
+            >
+              <MenuIcon />
+            </Button>
+          )}
+
+          <Link href={"/"}>
+            <YoutubeIcon />
+          </Link>
+        </div>
+
+        <div className="flex lg:hidden  items-center space-x-6">
+          <Button
+            onClick={() => SET_SHOW_SIDEBAR_MOBILE(true)}
+            variant="ghost"
+            className="rounded-full p-0 px-1.5 "
+          >
             <MenuIcon />
           </Button>
-          <YoutubeIcon />
+
+          <Link href={"/"}>
+            <YoutubeIcon />
+          </Link>
         </div>
         {/* search */}
         <div className="absolute hidden top-2 md:w-[500px] justify-center lg:w-[600px] mx-auto left-0 right-0 items-center md:flex space-x-3">

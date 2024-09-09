@@ -27,58 +27,18 @@ import {
   YouIcon,
 } from "./icons";
 import SidebarNavLg from "./sidebar-nav-lg";
-
-const sideLinkMd = [
-  {
-    id: 1,
-    name: "Home",
-    link: "/",
-    icon: <HomeIcon />,
-  },
-  {
-    id: 2,
-    name: "Shorts",
-    link: "/shorts",
-    icon: <ShortsIcon />,
-  },
-  {
-    id: 3,
-    name: "Subscraptions",
-    link: "/subscraptions",
-    icon: <SubscriptionsIcon />,
-  },
-  {
-    id: 4,
-    name: "You",
-    link: "/you",
-    icon: <YouIcon />,
-  },
-  {
-    id: 5,
-    name: "History",
-    link: "/history",
-    icon: <HistoryIcon />,
-  },
-];
+import { useContext } from "react";
+import { Context } from "./context-provider";
+import SidebarNavMd from "./sidebar-nav-md";
 
 const Sidebar = () => {
+  const { SHOW_SIDEBAR_DEKSTOP } = useContext(Context);
+
   return (
     <aside className="fixed bg-white dark:bg-black md:block z-10 top-[4.5rem] h-screen">
-      {/* lg */}
-      <SidebarNavLg />
-      {/* md */}
-      <ScrollArea className="hidden md:block lg:hidden">
-        <div className="w-20 h-screen flex flex-col items-center space-y-3">
-          {sideLinkMd?.map(({ id, link, name, icon }) => (
-            <Link key={id} href={link}>
-              <Button className="flex flex-col h-14" variant={"ghost"}>
-                {icon}
-                <p className="text-[0.6rem]">{name}</p>
-              </Button>
-            </Link>
-          ))}
-        </div>
-      </ScrollArea>
+      <div className="hidden lg:block">
+        {SHOW_SIDEBAR_DEKSTOP ? <SidebarNavMd /> : <SidebarNavLg />}
+      </div>
     </aside>
   );
 };

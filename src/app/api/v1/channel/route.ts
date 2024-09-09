@@ -9,8 +9,11 @@ export const POST = async (req: Request) => {
       data: data,
     });
 
+    console.log(data);
+
     return response({ message: "Success", status: 200 });
   } catch (error) {
+    console.log(error);
     return response({
       message: "error",
       error: "Something went wrong",

@@ -1,47 +1,117 @@
 datasource db {
-    provider  = "postgresql"
-    url       = env("NEXT_PUBLIC_DATABASE_URL")
-    directUrl = env("NEXT_PUBLIC_DIRECT_URL")
+    provider = "postgresql"
+    url      = env("NEXT_PUBLIC_DATABASE_URL")
 }
 
 generator client {
     provider = "prisma-client-js"
 }
 
+model User {
+    id        String    @id @default(cuid())
+    name      String
+    email     String    @unique
+    image     String
+    createdAt DateTime  @default(now()) @map(name: "created_at")
+    updatedAt DateTime  @default(now()) @map(name: "updated_at")
+    Comment   Comment[]
+    Like      Like[]
+
+    @@map(name: "users")
+}
+
 model Filter {
     id     String @id @default(cuid())
     filter String
-}
 
-model Video {
-    id          String @id @default(cuid())
-    videoId     String
-    type        String
-    title       String
-    description String
-    viewCount   Int
-    lengthText  String
-    thumbnail   String
+    createdAt DateTime @default(now()) @map(name: "created_at")
+    updatedAt DateTime @default(now()) @map(name: "updated_at")
 
-    createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
-
-    channelId String
-    channel   Channel @relation(fields: [channelId], references: [id])
+    @@map(name: "filters")
 }
 
 model Channel {
-    id                  String @id @default(cuid())
-    name                String
-    handleName          String
-    description         String
-    avatar              String
-    banner              String
-    subscriberCountText String
-    videosCountText     String
+    id          String @id @default(cuid())
+    name        String
+    handleName  String
+    description String
+    avatar      String
+    banner      String
+    subscriber  Int    @default(0)
 
     createdAt DateTime @default(now())
     updateAt  DateTime @updatedAt
 
     Video Video[]
+
+    @@map(name: "channels")
+}
+
+model Video {
+    id           String @id @default(cuid())
+    videoUrl     String
+    type         String
+    title        String
+    description  String
+    viewCount    Int?   @default(0)
+    thumbnail    String
+    likeCount    Int?   @default(0)
+    dislikeCount Int?   @default(0)
+
+    channelId String
+    channel   Channel @relation(fields: [channelId], references: [id])
+
+    commentId String?
+    comment   Comment[]
+
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
+    Like      Like?    @relation(fields: [likeId], references: [id])
+    likeId    String?
+
+    @@map(name: "videos")
+}
+
+model Comment {
+    id String @id @default(cuid())
+
+    comment String
+
+    videoId String
+    video   Video  @relation(fields: [videoId], references: [id])
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id])
+
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
+
+    @@map(name: "comments")
+}
+
+model WatchLater {
+    id String @id @default(cuid())
+
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
+
+    @@map(name: "watchlaters")
+}
+
+model Like {
+    id String @id @default(cuid())
+
+    like    Boolean @default(false)
+    dislike Boolean @default(false)
+
+    userId String?
+    user   User[]
+
+    videoId String?
+    video   Video[]
+
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
+
+    @@map(name: "likes")
 }

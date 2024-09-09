@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Badge } from "./ui/badge";
 
 import { IconRefresh } from "@tabler/icons-react";
@@ -9,19 +9,14 @@ import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { Skeleton } from "./ui/skeleton";
 import { Button } from "./ui/button";
 import { getFilter } from "@/hooks/filter";
+import { Context } from "./context-provider";
 
-interface IFilter {
-  selectedFilter: string;
-  setSelectedFilter: (select: string) => void;
-}
-
-const Filter = ({ selectedFilter, setSelectedFilter }: IFilter) => {
+const Filter = () => {
+  const { FILTER_VIDEO, SET_FILTER_VIDEO } = useContext(Context);
   const [refresh, setRefresh] = useState<number>(1);
-  // const [selectedFilter, setSelectedFilter] = useState<string>("All");
+  const handleRefresh = () => setRefresh(refresh + 1);
 
   const { data, loading, success } = getFilter(refresh);
-
-  const handleRefresh = () => setRefresh(refresh + 1);
 
   return (
     <nav className="h-12 mt-3 fixed w-full top-14 bg-white dark:bg-black">
@@ -46,10 +41,8 @@ const Filter = ({ selectedFilter, setSelectedFilter }: IFilter) => {
           ) : (
             data?.map((res: any, index: string) => (
               <Badge
-                onClick={() => setSelectedFilter(res?.filter)}
-                variant={
-                  selectedFilter === res?.filter ? "default" : "secondary"
-                }
+                onClick={() => SET_FILTER_VIDEO(res?.filter)}
+                variant={FILTER_VIDEO === res?.filter ? "default" : "secondary"}
                 key={index}
                 className="h-8 rounded-lg px-4 cursor-pointer"
               >

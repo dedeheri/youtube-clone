@@ -2,24 +2,13 @@
 
 import React from "react";
 import { useSearchParams } from "next/navigation";
-import useSWR from "swr";
 
 import Layout from "@/components/layout";
-import { fetcher } from "@/hooks/useFetcher";
 
-import ReactPlayer from "react-player";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import {
-  DownloadIcon,
-  NotificationIcon,
-  ShareIcon,
-  SubscribedIcon,
-  ThanksIcon,
-} from "@/components/icons";
-import ToastAlert from "@/components/toast";
 import { getVideosDetails } from "@/hooks/video";
 import { Skeleton } from "@/components/ui/skeleton";
+import VideoDetail from "@/components/video-detail";
+import VideoDetailRecommended from "@/components/video-detail-recommend";
 
 const Page = () => {
   const params = useSearchParams().get("v") as string;
@@ -27,7 +16,7 @@ const Page = () => {
 
   return (
     <Layout>
-      <div className="max-w-[1234px]  mx-32">
+      <div className="mt-20 lg:mx-32">
         {loading ? (
           <div className="space-y-5">
             <Skeleton className="w-[1200px] h-[670px] rounded-lg" />
@@ -41,42 +30,17 @@ const Page = () => {
             </div>
           </div>
         ) : (
-          <div className="space-y-5 ">
-            <ReactPlayer
-              width={"1200px"}
-              height={"670px"}
-              url={`https://www.youtube.com/watch?v=${params}`}
+          <div className="flex space-x-6">
+            <VideoDetail
+              videoUrl={data?.videoUrl}
+              title={data?.title}
+              likeCount={data?.likeCount}
+              channelAvatar={data?.channel?.avatar}
+              channelName={data?.channel?.name}
+              channelSubscriber={data?.channel?.subscriber}
             />
 
-            <h1 className="font-bold text-lg">{data?.title}</h1>
-            <div className="flex space-x-3 items-center justify-between">
-              <div className="flex space-x-3 items-center">
-                <Image
-                  className="rounded-full"
-                  alt={data?.title}
-                  src={data?.channel?.avatar}
-                  width={38}
-                  height={38}
-                />
-
-                <div className="-space-y-1">
-                  <h1 className="font-medium text-lg">{data?.channel?.name}</h1>
-                  <p className="text-sm text-neutral-500">
-                    {data?.channel?.subscriberCountText + " subscribers"}
-                  </p>
-                </div>
-
-                <Button className="h-9 rounded-full" variant={"default"}>
-                  <span>Subscribe</span>
-                </Button>
-              </div>
-
-              <div className="flex space-x-3 items-center">
-                <ToastAlert title={"Share"} icon={<ShareIcon />} />
-                <ToastAlert title={"Download"} icon={<DownloadIcon />} />
-                <ToastAlert title={"Thanks"} icon={<ThanksIcon />} />
-              </div>
-            </div>
+            <VideoDetailRecommended recommend={data?.channel?.name} />
           </div>
         )}
       </div>

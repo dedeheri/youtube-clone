@@ -9,10 +9,11 @@ export const GET = async (req: Request) => {
 
     const result = await prisma.video.findFirst({
       where: {
-        videoId: v,
+        videoUrl: v,
       },
       include: {
         channel: true,
+        comment: true,
       },
     });
 
@@ -32,6 +33,7 @@ export const GET = async (req: Request) => {
       status: 200,
     });
   } catch (error) {
+    console.log(error);
     return response({
       success: false,
       message: "error",

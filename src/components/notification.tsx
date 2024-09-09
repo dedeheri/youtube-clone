@@ -23,14 +23,14 @@ const Notification = () => {
           <NotificationIcon />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="absolute top-0 right-0 w-[20rem] md:w-[30rem] p-0 rounded-xl">
+      <PopoverContent className="absolute top-0 right-0 w-[20rem] md:w-[30rem] p-0 rounded-xl border-none shadow-2xl">
         <div>
           <h1 className="border-b p-3">Notifications</h1>
 
           <ScrollArea className="h-[30rem] space-y-4 ">
-            {data?.slice(0, 10)?.map((data: any, i: string) => (
+            {data?.slice(0, 7)?.map((data: any, i: string) => (
               <Link key={i} href={`/watch?v=${data?.videoId}`}>
-                <div className="flex space-x-2 justify-between py-3 hover:dark:bg-neutral-700 px-3">
+                <div className="flex space-x-2 justify-between py-3 hover:bg-neutral-100 hover:dark:bg-neutral-700 px-4">
                   <div className="flex space-x-4">
                     <Image
                       alt={data?.title}

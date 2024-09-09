@@ -23,6 +23,16 @@ export const POST = async (req: Request) => {
 export const GET = async () => {
   try {
     const result = await prisma.filter.findMany();
+
+    if (!result) {
+      return response({
+        success: true,
+        message: "Filter not found",
+        status: 404,
+        data: [],
+      });
+    }
+
     return response({
       success: true,
       message: "Success",

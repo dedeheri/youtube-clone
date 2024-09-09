@@ -8,6 +8,7 @@ import {
   HistoryIcon,
   HomeIcon,
   LikedVideoIcon,
+  MenuIcon,
   MovieIcon,
   MusicIcon,
   NewsIcon,
@@ -20,9 +21,12 @@ import {
   WatchLaterIcon,
   YouIcon,
   YourVideosIcon,
+  YoutubeIcon,
 } from "./icons";
 import { usePathname } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
+import { useContext } from "react";
+import { Context } from "./context-provider";
 
 const navChildOne = [
   {
@@ -111,12 +115,34 @@ const navChildFour = [
   },
 ];
 
-const SidebarNavLg = () => {
+interface ISidebarNavLg {
+  position?: string;
+}
+
+const SidebarNavLg = ({ position = "main" }: ISidebarNavLg) => {
+  const { SET_SHOW_SIDEBAR_MOBILE } = useContext(Context);
   const { data: session } = useSession();
 
   const pathName = usePathname();
   return (
-    <ScrollArea className="w-[240px]  lg:block hidden">
+    <ScrollArea
+      className={`w-[240px] ${
+        position === "main" ? "lg:block hidden" : "block"
+      }`}
+    >
+      {position !== "main" && (
+        <div className="flex h-12 mb-3 items-center space-x-5 mx-4">
+          <Button
+            onClick={() => SET_SHOW_SIDEBAR_MOBILE(false)}
+            variant="ghost"
+            className="rounded-full p-0 px-1.5 "
+          >
+            <MenuIcon />
+          </Button>
+          <YoutubeIcon />
+        </div>
+      )}
+
       {navChildOne?.map(({ name, link, icon }, i) => (
         <Button
           className="flex justify-start w-[220px]  h-10 rounded-xl space-x-6 mx-2"

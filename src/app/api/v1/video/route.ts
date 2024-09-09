@@ -12,6 +12,7 @@ export const POST = async (req: Request) => {
 
     return response({ message: "Success", status: 200 });
   } catch (error) {
+    console.log(error);
     return response({
       message: "error",
       error: "Something went wrong",
@@ -32,10 +33,6 @@ export const GET = async (req: Request) => {
       },
     });
 
-    const filterResult = result.filter((data) => {
-      return data?.channel?.name?.toLowerCase().includes(filter.toLowerCase());
-    });
-
     if (filter === "All") {
       return response({
         message: "Success",
@@ -44,6 +41,12 @@ export const GET = async (req: Request) => {
         status: 200,
       });
     } else {
+      const filterResult = result.filter((data) => {
+        return data?.channel?.name
+          ?.toLowerCase()
+          .includes(filter?.toLowerCase() || "");
+      });
+
       return response({
         message: "Success",
         success: true,
@@ -52,6 +55,7 @@ export const GET = async (req: Request) => {
       });
     }
   } catch (error) {
+    console.log(error);
     return response({
       message: "error",
       error: "Something went wrong",
