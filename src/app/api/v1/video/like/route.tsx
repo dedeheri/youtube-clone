@@ -10,12 +10,19 @@ export const POST = async (req: Request) => {
     });
 
     if (video) {
-      await prisma?.like?.create({
+      const likeResult = await prisma?.like?.create({
         data: {
           like,
           dislike,
           userId,
           videoId,
+        },
+      });
+
+      await prisma.video.update({
+        where: { id: videoId },
+        data: {
+          likeId: likeResult?.id,
         },
       });
     }

@@ -26,9 +26,9 @@ const Layout = ({
         <SidebarCollapse />
 
         <div
-          className={`w-full  ml-0 ${
+          className={`w-full pt-28  ml-0 ${
             sidebar
-              ? `space-y-3 w-full px-5 lg:px-14 overflow-hidden   ${
+              ? `space-y-3 w-full mb-20 px-5 lg:px-14 overflow-hidden   ${
                   SHOW_SIDEBAR_DEKSTOP
                     ? "ml-0 lg:ml-[3rem]"
                     : " lg:ml-[13.7rem]"

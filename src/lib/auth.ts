@@ -16,6 +16,13 @@ export const authOptions: NextAuthOptions = {
   },
 
   callbacks: {
+    async jwt({ token, account }) {
+      if (account) {
+        token.accessToken = token.access_token;
+      }
+      return token;
+    },
+
     async session({ session, token }) {
       return {
         ...session,
@@ -36,9 +43,9 @@ export const authOptions: NextAuthOptions = {
         if (!users) {
           await prisma.user.create({
             data: {
-              name: user?.name,
-              email: user?.email,
-              image: user?.image,
+              name: user?.name as string,
+              email: user?.email as string,
+              image: user?.image as string,
             },
           });
         }

@@ -56,3 +56,67 @@ export const getVideosDetails = (v?: string) => {
 
   return { data, loading, message, success };
 };
+
+export const getVideosHistory = () => {
+  const [data, setData] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>();
+  const [success, setSuccess] = useState<boolean>(false);
+
+  const fetch = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get("/api/v1/video/history");
+
+      setData(response?.data?.data);
+      setMessage(response?.data?.message);
+      setSuccess(response?.data?.success);
+    } catch (error) {
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetch();
+  }, []);
+
+  return { data, loading, message, success };
+};
+
+export const getVideosSearch = (search_query: string) => {
+  const [data, setData] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>();
+  const [success, setSuccess] = useState<boolean>(false);
+
+  const fetch = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `/api/v1/video/search?search_query=${search_query}`
+      );
+
+      setData(response?.data?.data);
+      setMessage(response?.data?.message);
+      setSuccess(response?.data?.success);
+    } catch (error) {
+      setSuccess((error as any)?.response?.data?.success);
+      setMessage(
+        (error as any)?.response?.data?.error ||
+          (error as any)?.response?.data?.message
+      );
+
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetch();
+  }, [search_query]);
+
+  return { data, loading, message, success };
+};

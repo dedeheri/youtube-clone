@@ -11,6 +11,7 @@ import Notification from "./notification";
 import { Context } from "./context-provider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Search from "./search";
 
 const Header = () => {
   const pathName = usePathname();
@@ -26,7 +27,7 @@ const Header = () => {
     <div className="fixed h-20 top-0 bg-white dark:bg-black w-full">
       <header className="h-14 w-full px-4 flex items-center relative justify-between">
         <div className="hidden lg:flex items-center space-x-6">
-          {pathName === "/" ? (
+          {pathName !== "/watch" ? (
             <Button
               onClick={() => SET_SHOW_SIDEBAR_DEKSTOP(!SHOW_SIDEBAR_DEKSTOP)}
               variant="ghost"
@@ -63,21 +64,7 @@ const Header = () => {
           </Link>
         </div>
         {/* search */}
-        <div className="absolute hidden top-2 md:w-[500px] justify-center lg:w-[600px] mx-auto left-0 right-0 items-center md:flex space-x-3">
-          <div className="border h-10 lg:w-full rounded-full flex justify-between ">
-            <input
-              placeholder="search"
-              className="px-5 outline-none bg-transparent w-full text-black"
-            />
-            <div className="bg-neutral-100 dark:bg-neutral-800 h-full w-16 rounded-r-full flex justify-center items-center border-l">
-              <SearchIcon />
-            </div>
-          </div>
-          <div className="bg-neutral-100 dark:bg-neutral-800 rounded-full flex justify-center items-center h-10 w-10">
-            <MicIcon />
-          </div>
-        </div>
-
+        <Search />
         <div className="flex space-x-3 items-center">
           <div className="space-x-3 flex items-center md:hidden">
             <SearchIcon />

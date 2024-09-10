@@ -48,26 +48,25 @@ model Channel {
 }
 
 model Video {
-    id           String @id @default(cuid())
-    videoUrl     String
-    type         String
-    title        String
-    description  String
-    viewCount    Int?   @default(0)
-    thumbnail    String
-    likeCount    Int?   @default(0)
-    dislikeCount Int?   @default(0)
-
-    channelId String
-    channel   Channel @relation(fields: [channelId], references: [id])
+    id          String  @id @default(cuid())
+    videoUrl    String
+    type        String
+    title       String
+    description String
+    viewCount   Int?    @default(0)
+    thumbnail   String
+    channelId   String
+    channel     Channel @relation(fields: [channelId], references: [id])
 
     commentId String?
     comment   Comment[]
 
     createdAt DateTime @default(now())
     updateAt  DateTime @updatedAt
-    Like      Like?    @relation(fields: [likeId], references: [id])
-    likeId    String?
+
+    Like    Like?     @relation(fields: [likeId], references: [id])
+    likeId  String?
+    History History[]
 
     @@map(name: "videos")
 }
@@ -114,4 +113,18 @@ model Like {
     updateAt  DateTime @updatedAt
 
     @@map(name: "likes")
+}
+
+model History {
+    id String @id @default(cuid())
+
+    userId String?
+
+    videoId String?
+    video   Video?  @relation(fields: [videoId], references: [id])
+
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
+
+    @@map(name: "historys")
 }

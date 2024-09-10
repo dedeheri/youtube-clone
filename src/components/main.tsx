@@ -13,10 +13,10 @@ const Main = () => {
   const { data, loading } = getVideos(FILTER_VIDEO);
 
   return (
-    <div className="pt-28 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-x-4 gap-y-11 w-full">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-x-4 gap-y-11 w-full">
       {loading
         ? [...Array(10)].map((_, i) => (
-            <Skeleton key={i} className="w-[19rem] h-48 rounded-xl" />
+            <Skeleton key={i} className="w-full h-48 rounded-xl" />
           ))
         : data?.map((result: IVideoMain) => (
             <VideoMain

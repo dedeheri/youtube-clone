@@ -8,7 +8,9 @@ const SidebarCollapse = () => {
   return (
     <div
       className={` w-full fixed h-full z-40 ${
-        SHOW_SIDEBAR_MOBILE ? "backdrop-brightness-50 " : "hidden"
+        SHOW_SIDEBAR_MOBILE
+          ? "backdrop-brightness-50 -translate-x-0 "
+          : "-translate-x-full "
       }`}
     >
       <div

@@ -60,7 +60,7 @@ const VideoDetail = ({
               variant="secondary"
               className="rounded-l-full space-x-2 flex items-center"
             >
-              <LikedVideoIcon />
+              <LikedVideoIcon liked={likeCount > 1 ? true : false} />
 
               <span>{likeCount}</span>
             </Button>

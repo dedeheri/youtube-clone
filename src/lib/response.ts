@@ -12,7 +12,7 @@ export const response = ({
   message,
   error,
   status,
-  success,
+  success = false,
   data = [],
 }: IResponseJson) => {
   return NextResponse.json(

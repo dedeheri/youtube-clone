@@ -27,6 +27,7 @@ import { usePathname } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import { useContext } from "react";
 import { Context } from "./context-provider";
+import Link from "next/link";
 
 const navChildOne = [
   {
@@ -144,29 +145,33 @@ const SidebarNavLg = ({ position = "main" }: ISidebarNavLg) => {
       )}
 
       {navChildOne?.map(({ name, link, icon }, i) => (
-        <Button
-          className="flex justify-start w-[220px]  h-10 rounded-xl space-x-6 mx-2"
-          variant={pathName === link ? "secondary" : "ghost"}
-        >
-          {icon}
-          <p className={pathName === link ? "font-medium" : "font-normal"}>
-            {name}
-          </p>
-        </Button>
+        <Link href={link} key={i}>
+          <Button
+            className="flex justify-start w-[220px]  h-10 rounded-xl space-x-6 mx-2"
+            variant={pathName === link ? "secondary" : "ghost"}
+          >
+            {icon}
+            <p className={pathName === link ? "font-medium" : "font-normal"}>
+              {name}
+            </p>
+          </Button>
+        </Link>
       ))}
 
       <Separator className="my-3" />
 
       {navChildTwo?.map(({ name, link, icon }, i) => (
-        <Button
-          className="flex justify-start w-[220px]  h-10 rounded-xl space-x-6 mx-2"
-          variant={pathName === link ? "secondary" : "ghost"}
-        >
-          {icon}
-          <p className={pathName === link ? "font-medium" : "font-normal"}>
-            {name}
-          </p>
-        </Button>
+        <Link href={link} key={i}>
+          <Button
+            className="flex justify-start w-[220px]  h-10 rounded-xl space-x-6 mx-2"
+            variant={pathName === link ? "secondary" : "ghost"}
+          >
+            {icon}
+            <p className={pathName === link ? "font-medium" : "font-normal"}>
+              {name}
+            </p>
+          </Button>
+        </Link>
       ))}
 
       {session &&
