@@ -9,20 +9,36 @@ export const GET = async (req: Request) => {
     const { searchParams } = new URL(req.url);
     const v = searchParams.get("v") as string;
 
-    const user = await prisma.user.findFirst({
-      where: { email: userSession?.user?.email as string },
-    });
+    const [user, video] = await prisma.$transaction([
+      prisma.user.findFirst({
+        where: { email: userSession?.user?.email as string },
+      }),
 
-    const video = await prisma.video.findFirst({
-      where: {
-        videoUrl: v,
-      },
-      include: {
-        channel: true,
-        comment: true,
-        Like: true,
-      },
-    });
+      prisma.video.findFirst({
+        where: {
+          videoUrl: v,
+        },
+        include: {
+          channel: true,
+          comment: true,
+          Like: true,
+        },
+      }),
+    ]);
+
+    //   where: { email: userSession?.user?.email as string },
+    // });
+
+    // const video = await prisma.video.findFirst({
+    //   where: {
+    //     videoUrl: v,
+    //   },
+    //   include: {
+    //     channel: true,
+    //     comment: true,
+    //     Like: true,
+    //   },
+    // });
 
     const like = await prisma.like.findMany({
       where: { videoId: video?.id },
@@ -50,6 +66,12 @@ export const GET = async (req: Request) => {
       });
     }
 
+    // push view count
+    await prisma.video.update({
+      where: { id: video?.id },
+      data: { viewCount: (video?.viewCount as number) + 1 },
+    });
+
     const finalResult = {
       ...video,
       likeCount: like.length,
@@ -62,7 +84,6 @@ export const GET = async (req: Request) => {
       status: 200,
     });
   } catch (error) {
-    console.log(error);
     return response({
       success: false,
       message: "error",

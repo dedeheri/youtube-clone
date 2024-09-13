@@ -15,7 +15,10 @@ export const getVideos = (selected?: string) => {
       setData(response?.data?.data);
       setMessage(response?.data?.message);
       setSuccess(response?.data?.success);
-    } catch (error) {
+    } catch (error: any) {
+      setMessage(error.response?.data?.error);
+      setSuccess(error.response?.data?.success);
+
       setLoading(false);
     } finally {
       setLoading(false);
@@ -57,6 +60,34 @@ export const getVideosDetails = (v?: string) => {
   return { data, loading, message, success };
 };
 
+export const getVideosLike = (sucessLiked: boolean, videoId?: string) => {
+  const [data, setData] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>();
+  const [success, setSuccess] = useState<boolean>(false);
+
+  const fetch = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`/api/v1/video/like?videoId=${videoId}`);
+
+      setData(response?.data?.data);
+      setMessage(response?.data?.message);
+      setSuccess(response?.data?.success);
+    } catch (error) {
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetch();
+  }, [sucessLiked]);
+
+  return { data, loading, message, success };
+};
+
 export const getVideosHistory = () => {
   const [data, setData] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -71,8 +102,10 @@ export const getVideosHistory = () => {
       setData(response?.data?.data);
       setMessage(response?.data?.message);
       setSuccess(response?.data?.success);
-    } catch (error) {
+    } catch (error: any) {
       setLoading(false);
+      setMessage(error.response?.data?.error);
+      setSuccess(error.response?.data?.success);
     } finally {
       setLoading(false);
     }

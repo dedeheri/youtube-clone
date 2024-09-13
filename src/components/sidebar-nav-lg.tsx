@@ -177,6 +177,7 @@ const SidebarNavLg = ({ position = "main" }: ISidebarNavLg) => {
       {session &&
         navChildFour?.map(({ name, link, icon }, i) => (
           <Button
+            key={i}
             className="flex justify-start w-[220px]  h-10 rounded-xl space-x-6 mx-2"
             variant={pathName === link ? "secondary" : "ghost"}
           >
@@ -212,6 +213,7 @@ const SidebarNavLg = ({ position = "main" }: ISidebarNavLg) => {
       <h1 className="px-7 my-1 font-medium">Explore</h1>
       {navChildThree?.map(({ name, link, icon }, i) => (
         <Button
+          key={i}
           className="flex justify-start w-[220px]  h-10 rounded-xl space-x-6 mx-2"
           variant={pathName === link ? "secondary" : "ghost"}
         >

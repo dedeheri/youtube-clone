@@ -10,12 +10,10 @@ interface IVideoDetailRecommended {
 }
 
 const VideoDetailRecommended = ({ recommend }: IVideoDetailRecommended) => {
-  const { data, loading } = getVideos(recommend);
-
-  console.log(data);
+  const { data } = getVideos(recommend);
 
   return (
-    <div className="w-[25rem] space-y-3 ">
+    <div className="w-full lg:w-[25rem] space-y-3 ">
       {data?.map((video: any) => (
         <div className="flex space-x-3">
           <Image
@@ -27,7 +25,9 @@ const VideoDetailRecommended = ({ recommend }: IVideoDetailRecommended) => {
           />
           <div>
             <div className="flex ">
-              <h1 className="line-clamp-2 h-12 w-[12rem]">{video?.title}</h1>
+              <h1 className="line-clamp-2 h-12 w-full lg:w-[12rem]">
+                {video?.title}
+              </h1>
               <DropdownVideo />
             </div>
             <p className="text-neutral-500 text-sm ">{video?.channel?.name}</p>

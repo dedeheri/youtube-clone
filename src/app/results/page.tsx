@@ -12,9 +12,9 @@ import moment from "moment";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const Page = ({ searchParams }: { searchParams: { search_query: string } }) => {
-  const { data, message, loading } = getVideosSearch(searchParams.search_query);
-
-  console.log(message);
+  const { data, message, loading, success } = getVideosSearch(
+    searchParams.search_query
+  );
 
   return (
     <Layout sidebar={true}>
@@ -34,6 +34,12 @@ const Page = ({ searchParams }: { searchParams: { search_query: string } }) => {
               </div>
             </div>
           ))}
+
+        {!loading && !success && (
+          <h1 className="text-3xl font-medium flex justify-center">
+            {message}
+          </h1>
+        )}
 
         {!loading && (
           <div className=" space-y-7">

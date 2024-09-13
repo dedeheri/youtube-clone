@@ -44,6 +44,24 @@ export const YoutubeIcon = () => {
   );
 };
 
+export const ArrowLeftIcon = () => {
+  return (
+    <div className="fill-black dark:fill-white">
+      <svg
+        width="24"
+        height="24"
+        mirror-in-rtl=""
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        focusable="false"
+        aria-hidden="true"
+      >
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
+      </svg>
+    </div>
+  );
+};
+
 export const SubscribedIcon = () => {
   return (
     <div className="fill-black dark:fill-white w-24 h-24">
@@ -171,9 +189,9 @@ export const SearchIcon = () => {
         display="inhert"
       >
         <path
-          clip-rule="evenodd"
+          clipRule="evenodd"
           d="M16.296 16.996a8 8 0 11.707-.708l3.909 3.91-.707.707-3.909-3.909zM18 11a7 7 0 00-14 0 7 7 0 1014 0z"
-          fill-rule="evenodd"
+          fillRule="evenodd"
         ></path>
       </svg>
     </div>

@@ -22,25 +22,28 @@ const VideoHistory = ({
   channelHandle,
 }: IVideoHistory) => {
   return (
-    <div className="flex  space-x-4">
+    <div className="flex w-full  space-x-4">
       <Image
         src={thumbnail}
         alt={title}
         width={210}
         height={210}
-        className="rounded-xl"
+        className="rounded-xl h-[7rem] w-[13rem]"
       />
 
-      <div>
+      <div className="space-y-1">
         <Link href={`/watch?v=${videoUrl}`}>
-          <h1>{title}</h1>
+          <h1 className="line-clamp-2">{title}</h1>
         </Link>
 
-        <div className="text-neutral-600 flex space-x-4 text-sm">
+        <div className="text-neutral-600 dark:text-neutral-400 flex space-x-2 text-sm">
           <Link href={`/${channelHandle}`}>{channelName}</Link>
+          <p>•</p>
           <p> {millify(viewCount) + " views"}</p>
         </div>
-        <h1 className="text-neutral-600 line-clamp-2 text-sm">{description}</h1>
+        <h1 className="text-neutral-600 dark:text-neutral-400 line-clamp-2 text-sm">
+          {description}
+        </h1>
       </div>
     </div>
   );

@@ -27,10 +27,14 @@ export interface IVideoMain {
 [];
 
 export interface IVideoDetail {
+  videoId: string;
   videoUrl: string;
   title: string;
-  likeCount: number;
+  description: string;
+  viewCount: number;
   channelAvatar: string;
+  createdAt: string;
+
   channelName: string;
   channelSubscriber: number;
 }

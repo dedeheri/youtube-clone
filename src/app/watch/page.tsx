@@ -16,7 +16,7 @@ const Page = () => {
 
   return (
     <Layout>
-      <div className="mt-20 lg:mx-32">
+      <div className="lg:mx-32">
         {loading ? (
           <div className="space-y-5">
             <Skeleton className="w-[1200px] h-[670px] rounded-lg" />
@@ -30,11 +30,14 @@ const Page = () => {
             </div>
           </div>
         ) : (
-          <div className="flex space-x-6">
+          <div className="lg:flex  space-y-5 lg:space-y-0 px-5 md:px-0 lg:space-x-6">
             <VideoDetail
+              videoId={data?.id}
               videoUrl={data?.videoUrl}
               title={data?.title}
-              likeCount={data?.likeCount}
+              viewCount={data?.viewCount}
+              description={data?.description}
+              createdAt={data?.createdAt}
               channelAvatar={data?.channel?.avatar}
               channelName={data?.channel?.name}
               channelSubscriber={data?.channel?.subscriber}

@@ -12,7 +12,6 @@ export const POST = async (req: Request) => {
 
     return response({ message: "Success", status: 200 });
   } catch (error) {
-    console.log(error);
     return response({
       message: "error",
       error: "Something went wrong",
@@ -27,36 +26,39 @@ export const GET = async (req: Request) => {
 
     const filter = searchParams.get("filter") as string;
 
-    const result = await prisma.video.findMany({
+    const video = await prisma.video.findMany({
+      where: {
+        channel: {
+          name: {
+            contains: filter === "All" ? "" : filter,
+            mode: "insensitive",
+          },
+        },
+      },
+
       include: {
         channel: true,
       },
     });
 
-    if (filter === "All") {
+    if (video.length === 0) {
       return response({
-        message: "Success",
-        success: true,
-        data: result,
-        status: 200,
+        success: false,
+        message: "error",
+        error: "This list has no videos.",
+        status: 404,
       });
     } else {
-      const filterResult = result.filter((data) => {
-        return data?.channel?.name
-          ?.toLowerCase()
-          .includes(filter?.toLowerCase() || "");
-      });
-
       return response({
         message: "Success",
         success: true,
-        data: filterResult,
+        data: video,
         status: 200,
       });
     }
   } catch (error) {
-    console.log(error);
     return response({
+      success: false,
       message: "error",
       error: "Something went wrong",
       status: 500,

@@ -6,13 +6,19 @@ interface IToastAlert {
   icon: any;
   title?: string;
   className?: string;
+  variant?: any;
 }
 
-const ToastAlert = ({ icon, title, className }: IToastAlert) => {
+const ToastAlert = ({
+  icon,
+  title,
+  className,
+  variant = "secondary",
+}: IToastAlert) => {
   const { toast } = useToast();
   return (
     <Button
-      variant={"secondary"}
+      variant={variant}
       className={`rounded-full space-x-2 ${className}`}
       onClick={() => {
         toast({

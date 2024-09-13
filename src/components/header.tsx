@@ -12,6 +12,7 @@ import { Context } from "./context-provider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Search from "./search";
+import SearchMobile from "./search-mobile";
 
 const Header = () => {
   const pathName = usePathname();
@@ -65,11 +66,8 @@ const Header = () => {
         </div>
         {/* search */}
         <Search />
-        <div className="flex space-x-3 items-center">
-          <div className="space-x-3 flex items-center md:hidden">
-            <SearchIcon />
-            <MicIcon />
-          </div>
+        <div className="flex space-x-1 items-center">
+          <SearchMobile />
 
           {/* login */}
           {session ? (
